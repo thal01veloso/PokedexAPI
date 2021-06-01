@@ -12,7 +12,7 @@ def index():
 
 @app.route("/buscar", methods=['GET',"POST"])
 def buscar():
-    pokemon = Pokemon(request.form['nome'])
+    pokemon = Pokemon(request.form['nome'].lower())
     try:
         res = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon.nome}").text
         res = json.loads(res)['sprites']
