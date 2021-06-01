@@ -12,14 +12,15 @@ def index():
 
 @app.route("/buscar", methods=['GET',"POST"])
 def buscar():
-    pokemon = Pokemon(request.form['nome'].lower())
+    pokemon = Pokemon(request.form['nome'].lower(),"")
     try:
         res = requests.get(f"https://pokeapi.co/api/v2/pokemon/{pokemon.nome}").text
         res = json.loads(res)['sprites']
         res = res['front_default']
+        pokemon.foto=res
     except:
-        print("falhou")
-    return render_template("index.html", res=res, nome=pokemon.nome.upper())
+        return "Nome incorreto"
+    return render_template("index.html", foto=pokemon.foto, nome=pokemon.nome.upper())
 
 app.run(debug=True)
 
